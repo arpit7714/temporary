@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements UsageContract.Vie
     private Button button;
     private UsageContract.Presenter presenter;
     private UsageStatAdapter adapter;
-
+    private TextView mSwitchText;
 
     //this is used to show the average time smartphone used for today
     private long mtotal;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements UsageContract.Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mSwitchText= (TextView) findViewById(R.id.enable_text);
         //app transition animation
         // https://guides.codepath.com/android/Shared-Element-Activity-Transition
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements UsageContract.Vie
         permissionMessage.setVisibility(VISIBLE);
         button.setVisibility(VISIBLE);
         button.setOnClickListener(v -> openSettings());
-
+        mSwitchText.setVisibility(View.GONE);
         presenter = new UsagePresenter(this, this);
         newmethod();
     }
@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements UsageContract.Vie
             permissionMessage.setVisibility(GONE);
             showProgressBar(true);
             button.setVisibility(GONE);
+            mSwitchText.setVisibility(View.VISIBLE);
             new MyAsyncTask().execute(0);
 
         }
@@ -118,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements UsageContract.Vie
         if (hasPermission(getApplicationContext())) {
             permissionMessage.setVisibility(GONE);
             button.setVisibility(GONE);
+            mSwitchText.setVisibility(View.VISIBLE);
             showProgressBar(true);
             new MyAsyncTask().execute(0);
         }
@@ -193,8 +195,13 @@ public class MainActivity extends AppCompatActivity implements UsageContract.Vie
             //mSwipe.setRefreshing(false);
                 Log.v("size",String.valueOf(appItems.size()));
             for(AppItem item :appItems){
-                    Log.v("testing5",item.mPackageName+"event time"+item.mEventTime+"event type"+item.mEventType+"usage time"+item.mUsageTime);
+                    //Log.v("testing5",item.mPackageName+"event time"+item.mEventTime+"event type"+item.mEventType+"usage time"+item.mUsageTime);
+                if (item.mUsageTime <= 0) continue;
+                mTotal += item.mUsageTime;
             }
+
+            mSwitchText.setText(String.format(getResources().getString(R.string.total), DateUtils.covertingtime(mTotal)));
+            mSwitchText.setVisibility(View.VISIBLE);
             adapter.setList(appItems);
             showProgressBar(false);
         }

@@ -90,6 +90,7 @@ public class appitem {
                             String appname=packagemanager.getApplicationLabel(ai).toString();
                             item.appname=appname;
                             item.appicon=appicon;
+                           // item.mEventTime=eventTime;
                         }
                         catch (PackageManager.NameNotFoundException e){
                             throw new IllegalArgumentException(e);

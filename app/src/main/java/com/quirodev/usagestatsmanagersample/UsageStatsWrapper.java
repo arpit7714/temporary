@@ -14,6 +14,7 @@ public final class UsageStatsWrapper implements Comparable<UsageStatsWrapper> {
         this.usageStats = usageStats;
         this.appIcon = appIcon;
         this.appName = appName;
+
     }
 
     public UsageStats getUsageStats() {

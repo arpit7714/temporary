@@ -11,11 +11,13 @@ public class UsageStatVH extends RecyclerView.ViewHolder {
 
     private ImageView appIcon;
     private TextView appName;
+    //private TextView eventtime;
     private TextView lastTimeUsed;
 
     public UsageStatVH(View itemView) {
         super(itemView);
 
+        //eventtime=(TextView) itemView.findViewById(R.id.eventtime);
         appIcon = (ImageView) itemView.findViewById(R.id.icon);
         appName = (TextView) itemView.findViewById(R.id.title);
         lastTimeUsed = (TextView) itemView.findViewById(R.id.last_used);
@@ -25,5 +27,6 @@ public class UsageStatVH extends RecyclerView.ViewHolder {
         appIcon.setImageDrawable(usageStatsWrapper.appicon);
         appName.setText(usageStatsWrapper.appname);
         lastTimeUsed.setText(String.valueOf(DateUtils.covertingtime(usageStatsWrapper.mUsageTime)));
+        //eventtime.setText(usageStatsWrapper.mEventType);
     }
 }
